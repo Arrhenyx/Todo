@@ -1,0 +1,70 @@
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from typing import List
+
+# ایجاد برنامه FastAPI
+app = FastAPI(title="To-Do List API", version="1.0.0")
+
+# لیست موقت برای ذخیره کارها (جایگزین دیتابیس)
+todos = []
+next_id = 1
+
+# مدل داده‌ای برای ورودی
+class TodoItem(BaseModel):
+    title: str
+    description: str = ""
+
+# مدل داده‌ای برای خروجی
+class TodoResponse(TodoItem):
+    id: int
+    completed: bool
+
+# ایجاد کار جدید
+@app.post("/todos/", response_model=TodoResponse)
+def create_todo(todo: TodoItem):
+    global next_id
+    new_todo = {
+        "id": next_id,
+        "title": todo.title,
+        "description": todo.description,
+        "completed": False
+    }
+    todos.append(new_todo)
+    next_id += 1
+    return new_todo
+
+# دریافت همه کارها
+@app.get("/todos/", response_model=List[TodoResponse])
+def get_all_todos():
+    return todos
+
+# دریافت یک کار خاص
+@app.get("/todos/{todo_id}", response_model=TodoResponse)
+def get_todo(todo_id: int):
+    for todo in todos:
+        if todo["id"] == todo_id:
+            return todo
+    raise HTTPException(status_code=404, detail="کار مورد نظر یافت نشد")
+
+# به‌روزرسانی وضعیت انجام کار
+@app.put("/todos/{todo_id}/complete")
+def complete_todo(todo_id: int):
+    for todo in todos:
+        if todo["id"] == todo_id:
+            todo["completed"] = True
+            return {"message": "کار انجام شد", "todo": todo}
+    raise HTTPException(status_code=404, detail="کار مورد نظر یافت نشد")
+
+# حذف یک کار
+@app.delete("/todos/{todo_id}")
+def delete_todo(todo_id: int):
+    for index, todo in enumerate(todos):
+        if todo["id"] == todo_id:
+            deleted_todo = todos.pop(index)
+            return {"message": "کار حذف شد", "deleted_todo": deleted_todo}
+    raise HTTPException(status_code=404, detail="کار مورد نظر یافت نشد")
+
+# صفحه اصلی
+@app.get("/")
+def read_root():
+    return {"message": "به API مدیریت کارهای روزانه خوش آمدید!", "docs": "برو به /docs"}
