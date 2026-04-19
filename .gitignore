@@ -1,0 +1,13 @@
+# توی پوشه پروژه (FastAPI) یه فایل .gitignore بساز
+echo "__pycache__/
+*.pyc
+.idea/
+.vscode/
+*.db
+venv/
+env/" > .gitignore
+
+# بعد کامیت و پوش کن
+git add .gitignore
+git commit -m "chore: add .gitignore"
+git push
