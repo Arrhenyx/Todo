@@ -9,3 +9,5 @@ env/" > .gitignore
 git add .gitignore
 git commit -m "chore: add .gitignore"
 git push
+data/
+*.db"
