@@ -1,13 +1,25 @@
-echo "__pycache__/
+# Byte-compiled files
+__pycache__/
 *.pyc
+*.pyo
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
 .idea/
 .vscode/
-*.db
-venv/
-env/" > .gitignore
+.DS_Store
 
-git add .gitignore
-git commit -m "chore: add .gitignore"
-git push
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Data folder
 data/
-*.db"
+
+# Logs
+*.log
