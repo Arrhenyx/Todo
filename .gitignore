@@ -18,5 +18,5 @@ env/
 .venv/
 
 data/
-
+echo "FastAPI/
 *.log
