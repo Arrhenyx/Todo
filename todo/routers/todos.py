@@ -78,7 +78,7 @@ async def update_todo(user: user_dependency,
     todo_model.complete = todo_request.complete
 
     db.add(todo_model)
-    db.commit()  # Fixed: db, commit -> db.commit
+    db.commit()
 
 
 @router.delete("/todo/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)  # Fixed: added missing slash
