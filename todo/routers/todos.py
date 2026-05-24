@@ -73,7 +73,7 @@ async def update_todo(user: user_dependency,
         raise HTTPException(status_code=404, detail="TODO IS NOT HERE")
 
     todo_model.title = todo_request.title  # Fixed: todo.request -> todo_request
-    todo_model.description = todo_request.description  # Fixed: todo_rquest -> todo_request
+    todo_model.description = todo_request.description  # Fixed: todo_request -> todo_request
     todo_model.priority = todo_request.priority  # Fixed: todo.request -> todo_request
     todo_model.complete = todo_request.complete
 
