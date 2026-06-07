@@ -89,15 +89,3 @@ def test_delete_todo_not_found():
     assert response.status_code == 404
     assert response.json() == {'detail': 'Todo not found.'}
 
-
-
-
-
-
-
-
-
-
-
-
-
